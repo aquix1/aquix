@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquix - Server & Security Expert</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        :root {
+            --primary: #ffffff;
+            --secondary: #000000;
+            --accent: #5865F2;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --bg-primary: #000000;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --card-bg: rgba(17, 24, 39, 0.9);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px -10px rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .terminal-line {
+            animation: typeLine 0.1s linear forwards;
+            opacity: 0;
+        }
+        @keyframes typeLine {
+            to { opacity: 1; }
+        }
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .skill-bar {
+            transition: width 1.5s ease-in-out;
+            background: linear-gradient(90deg, var(--primary), #a1a1aa);
+        }
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        .glow {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+        .discord-card {
+            background: linear-gradient(180deg, #0f172a, #071029);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .discord-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(2, 6, 23, 0.7);
+        }
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-black/90 backdrop-blur-md border-b border-gray-800 py-4 px-6 fixed w-full z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center mr-3">
+                    <span class="text-black font-bold text-xl">A</span>
+                </div>
+                <span class="text-2xl font-bold text-white">AQUIX</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-white hover:text-gray-300 transition-colors">Home</a>
+                <a href="#services" class="nav-link text-white hover:text-gray-300 transition-colors">Services</a>
+                <a href="#skills" class="nav-link text-white hover:text-gray-300 transition-colors">Skills</a>
+                <a href="#about" class="nav-link text-white hover:text-gray-300 transition-colors">About</a>
+                <a href="#contact" class="nav-link text-white hover:text-gray-300 transition-colors">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-black/95 py-4 px-6">
+            <a href="#home" class="block py-3 text-white hover:text-gray-300 transition-colors border-b border-gray-800">Home</a>
+            <a href="#services" class="block py-3 text-white hover:text-gray-300 transition-colors border-b border-gray-800">Services</a>
+            <a href="#skills" class="block py-3 text-white hover:text-gray-300 transition-colors border-b border-gray-800">Skills</a>
+            <a href="#about" class="block py-3 text-white hover:text-gray-300 transition-colors border-b border-gray-800">About</a>
+            <a href="#contact" class="block py-3 text-white hover:text-gray-300 transition-colors">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg min-h-screen flex items-center pt-16 pb-24 relative overflow-hidden">
+        <div class="absolute top-1/4 right-10 w-20 h-20 rounded-full bg-white/10 floating"></div>
+        <div class="absolute bottom-1/3 left-10 w-16 h-16 hexagon bg-white/5 floating" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/3 left-1/4 w-10 h-10 rounded-full bg-white/5 pulse-dot"></div>
+        
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center z-10">
+            <div class="flex flex-col w-full md:w-1/2 justify-center items-start pt-12 pb-24 px-6">
+                <div class="inline-flex items-center bg-black border border-gray-800 rounded-full px-4 py-2 mb-6">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2 pulse-dot"></span>
+                    <span class="text-sm text-gray-300">Available for new projects</span>
+                </div>
+                <h1 class="font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-4 leading-tight">Server & Security <span class="bg-white text-black px-2 rounded-lg">Expert</span></h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8">Specializing in VPS, server protection, performance optimization, and Python development</p>
+                <div class="flex space-x-4">
+                    <a href="#contact" class="btn-primary px-6 py-3 rounded-lg font-medium flex items-center">
+                        <span>Get Started</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 py-12">
+                <div class="bg-gray-900 p-2 rounded-2xl shadow-2xl glow">
+                    <div class="flex p-2 bg-gray-800 rounded-t-lg">
+                        <div class="flex space-x-1 mr-3">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-sm text-gray-400">terminal — bash — 80×24</div>
+                    </div>
+                    <div class="p-4 bg-gray-900 rounded-b-lg font-mono">
+                        <div class="text-green-400 mb-2 terminal-line" style="animation-delay: 0.5s;"><span class="text-white">$</span> aquix --expertise</div>
+                        <div class="text-blue-300 mb-2 terminal-line" style="animation-delay: 1s;">> VPS Servers: <span class="text-white">Optimized Configuration</span></div>
+                        <div class="text-blue-300 mb-2 terminal-line" style="animation-delay: 1.5s;">> Security: <span class="text-white">Advanced Protection</span></div>
+                        <div class="text-blue-300 mb-2 terminal-line" style="animation-delay: 2s;">> Performance: <span class="text-white">Enhanced Optimization</span></div>
+                        <div class="text-blue-300 mb-2 terminal-line" style="animation-delay: 2.5s;">> Python: <span class="text-white">Expert Development</span></div>
+                        <div class="text-blue-300 mb-4 terminal-line" style="animation-delay: 3s;">> Ubuntu: <span class="text-white">22.04 & 24.04 LTS</span></div>
+                        <div class="text-white terminal-line" style="animation-delay: 3.5s;"><span class="text-white">$</span> <span class="animate-pulse">_</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">My <span class="bg-white text-black px-2 rounded-lg">Expertise</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Specialized services to optimize and secure your server infrastructure with cutting-edge solutions</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="card-hover rounded-xl p-6 relative overflow-hidden">
+                    <div class="absolute -top-4 -right-4 w-20 h-20 bg-white/5 rounded-full"></div>
+                    <div class="w-14 h-14 bg-white rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-server text-black text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">VPS Servers</h3>
+                    <p class="text-gray-400 mb-4">Expert configuration and management of Virtual Private Servers for optimal performance and reliability.</p>
+                    <ul class="text-gray-400 space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Custom VPS setup</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Load balancing</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>24/7 monitoring</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="card-hover rounded-xl p-6 relative overflow-hidden">
+                    <div class="absolute -top-4 -right-4 w-20 h-20 bg-white/5 rounded-full"></div>
+                    <div class="w-14 h-14 bg-white rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-black text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Server Protection</h3>
+                    <p class="text-gray-400 mb-4">Advanced security measures to protect your servers from threats and vulnerabilities.</p>
+                    <ul class="text-gray-400 space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Firewall configuration</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>DDoS protection</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Intrusion detection</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="card-hover rounded-xl p-6 relative overflow-hidden">
+                    <div class="absolute -top-4 -right-4 w-20 h-20 bg-white/5 rounded-full"></div>
+                    <div class="w-14 h-14 bg-white rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-tachometer-alt text-black text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Performance Optimization</h3>
+                    <p class="text-gray-400 mb-4">Comprehensive optimization techniques to enhance server speed and efficiency.</p>
+                    <ul class="text-gray-400 space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Caching strategies</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Database optimization</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Resource management</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="card-hover rounded-xl p-6 relative overflow-hidden">
+                    <div class="absolute -top-4 -right-4 w-20 h-20 bg-white/5 rounded-full"></div>
+                    <div class="w-14 h-14 bg-white rounded-lg flex items-center justify-center mb-4">
+                        <i class="fab fa-python text-black text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Python Development</h3>
+                    <p class="text-gray-400 mb-4">Expert Python programming for automation, scripting, and application development.</p>
+                    <ul class="text-gray-400 space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Custom scripts</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Automation tools</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>API development</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="card-hover rounded-xl p-6 relative overflow-hidden">
+                    <div class="absolute -top-4 -right-4 w-20 h-20 bg-white/5 rounded-full"></div>
+                    <div class="w-14 h-14 bg-white rounded-lg flex items-center justify-center mb-4">
+                        <i class="fab fa-ubuntu text-black text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Ubuntu Systems</h3>
+                    <p class="text-gray-400 mb-4">Specialized knowledge in Ubuntu 22.04 and 24.04 LTS systems administration and optimization.</p>
+                    <ul class="text-gray-400 space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>System administration</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Package management</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Kernel optimization</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="card-hover rounded-xl p-6 relative overflow-hidden">
+                    <div class="absolute -top-4 -right-4 w-20 h-20 bg-white/5 rounded-full"></div>
+                    <div class="w-14 h-14 bg-white rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-code text-black text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Custom Solutions</h3>
+                    <p class="text-gray-400 mb-4">Tailored solutions to meet your specific server infrastructure and security needs.</p>
+                    <ul class="text-gray-400 space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Bespoke configurations</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Architecture design</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-white mr-2 text-sm"></i>
+                            <span>Consulting services</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 gradient-bg relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-5">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 border border-white rounded-full"></div>
+            <div class="absolute top-1/2 left-2/3 w-32 h-32 border border-white rounded-full"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-48 h-48 border border-white rounded-full"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">Technical <span class="bg-white text-black px-2 rounded-lg">Skills</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Mastery of server technologies and security practices with years of hands-on experience</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <!-- Skill 1 -->
+                <div class="mb-8">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-white">VPS Management</span>
+                        <span class="text-white" id="skill1-percent">90%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2.5">
+                        <div class="skill-bar h-2.5 rounded-full" style="width: 0%" data-target="90"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 2 -->
+                <div class="mb-8">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-white">Server Security</span>
+                        <span class="text-white" id="skill2-percent">90%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2.5">
+                        <div class="skill-bar h-2.5 rounded-full" style="width: 0%" data-target="90"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 3 -->
+                <div class="mb-8">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-white">Performance Optimization</span>
+                        <span class="text-white" id="skill3-percent">92%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2.5">
+                        <div class="skill-bar h-2.5 rounded-full" style="width: 0%" data-target="92"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 4 -->
+                <div class="mb-8">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-white">Python Development</span>
+                        <span class="text-white" id="skill4-percent">95%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2.5">
+                        <div class="skill-bar h-2.5 rounded-full" style="width: 0%" data-target="95"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 5 -->
+                <div class="mb-8">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-white">Ubuntu Systems</span>
+                        <span class="text-white" id="skill5-percent">95%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2.5">
+                        <div class="skill-bar h-2.5 rounded-full" style="width: 0%" data-target="95"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 section-title">About <span class="bg-white text-black px-2 rounded-lg">Aquix</span></h2>
+                    <p class="text-gray-400 mb-4">
+                        Aquix is a server and security expert with extensive experience in VPS management, server protection, 
+                        and performance optimization. With deep knowledge of Python development and Ubuntu systems, Aquix 
+                        provides comprehensive solutions for server infrastructure.
+                    </p>
+                    <p class="text-gray-400 mb-4">
+                        Specializing in Ubuntu 22.04 and 24.04 LTS, Aquix ensures that servers are not only secure but also 
+                        optimized for peak performance. Whether you need assistance with configuration, security hardening, 
+                        or custom Python scripts for automation, Aquix has the expertise to deliver.
+                    </p>
+                    <p class="text-gray-400">
+                        With a focus on reliability and efficiency, Aquix helps businesses and individuals maximize their 
+                        server potential while maintaining the highest security standards.
+                    </p>
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <div class="card-hover p-8 rounded-xl relative overflow-hidden">
+                        <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-white/5 rounded-full"></div>
+                        <h3 class="text-xl font-semibold text-white mb-4">Certifications & Expertise</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <i class="fas fa-certificate text-white mr-3"></i>
+                                <span class="text-gray-300">Ubuntu Server Professional</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-certificate text-white mr-3"></i>
+                                <span class="text-gray-300">Advanced Server Security</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-certificate text-white mr-3"></i>
+                                <span class="text-gray-300">Python Development Expert</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-certificate text-white mr-3"></i>
+                                <span class="text-gray-300">VPS Performance Optimization</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-certificate text-white mr-3"></i>
+                                <span class="text-gray-300">Linux System Administration</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-certificate text-white mr-3"></i>
+                                <span class="text-gray-300">Network Security Specialist</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 gradient-bg">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 section-title">Get In <span class="bg-white text-black px-2 rounded-lg">Touch</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Ready to enhance your server infrastructure? Let's discuss how I can help secure and optimize your systems</p>
+            </div>
+            
+            <div class="max-w-2xl mx-auto discord-card rounded-xl p-8">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="flex-shrink-0 w-16 h-16 bg-[#5865F2] rounded-xl flex items-center justify-center">
+                        <i class="fab fa-discord text-white text-3xl"></i>
+                    </div>
+                    <div class="flex-grow text-center md:text-left">
+                        <h3 class="text-xl font-semibold text-white mb-2">Contact via Discord</h3>
+                        <p class="text-gray-300 mb-4">The fastest way to reach me is through my official Discord server. Join now to discuss your project requirements.</p>
+                        <a href="https://discord.gg/TXPC8SCK" target="_blank" class="btn-primary inline-flex items-center px-5 py-3 rounded-lg">
+                            <i class="fab fa-discord mr-2"></i>
+                            Join Discord Server
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center mr-3">
+                            <span class="text-black font-bold text-xl">A</span>
+                        </div>
+                        <span class="text-2xl font-bold text-white">AQUIX</span>
+                    </div>
+                    <p class="text-gray-400 mt-2">Server & Security Expert</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 Aquix. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Animate skill bars on scroll
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-bar');
+            skillBars.forEach(bar => {
+                const targetWidth = bar.getAttribute('data-target') + '%';
+                bar.style.width = targetWidth;
+                
+                // Update percentage text
+                const skillId = bar.parentElement.parentElement.querySelector('span:last-child').id;
+                if (skillId) {
+                    const percentElement = document.getElementById(skillId);
+                    let currentPercent = 0;
+                    const targetPercent = parseInt(bar.getAttribute('data-target'));
+                    const interval = setInterval(() => {
+                        if (currentPercent >= targetPercent) {
+                            clearInterval(interval);
+                            return;
+                        }
+                        currentPercent++;
+                        percentElement.textContent = currentPercent + '%';
+                    }, 1500 / targetPercent);
+                }
+            });
+        }
+
+        // Intersection Observer for skill bars animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkillBars();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(document.getElementById('skills'));
+
+        // Terminal typing animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const terminalLines = document.querySelectorAll('.terminal-line');
+            terminalLines.forEach((line, index) => {
+                line.style.animationDelay = `${0.5 + index * 0.5}s`;
+            });
+        });
+    </script>
+</body>
+</html>
